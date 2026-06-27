@@ -1,51 +1,50 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
-export default function MusicPlayer() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [playing, setPlaying] = useState(false);
+import LoadingScreen from "../components/LoadingScreen";
+import Messenger from "../components/Messenger/Messenger";
+import Gallery from "../components/Gallery";
+import Letter from "../components/Letter";
+import Ending from "../components/Ending";
+import MusicPlayer from "../components/MusicPlayer";
 
-  const toggleMusic = () => {
-    if (!audioRef.current) return;
-
-    if (playing) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-
-    setPlaying(!playing);
-  };
+export default function Home() {
+  const [page, setPage] = useState<
+    "loading" | "messenger" | "gallery" | "letter" | "ending"
+  >("loading");
 
   return (
     <>
-      <audio
-        ref={audioRef}
-        src="/music/the-overtunes.mp3"
-        loop
-      />
+      <MusicPlayer />
 
-      <button
-        onClick={toggleMusic}
-        className="
-        fixed
-        bottom-6
-        right-6
-        z-50
-        w-14
-        h-14
-        rounded-full
-        bg-pink-500
-        text-white
-        shadow-xl
-        hover:scale-110
-        transition-all
-        duration-300
-        "
-      >
-        {playing ? "❚❚" : "♫"}
-      </button>
+      {page === "loading" && (
+        <LoadingScreen
+          onFinish={() => setPage("messenger")}
+        />
+      )}
+
+      {page === "messenger" && (
+        <Messenger
+          onFinish={() => setPage("gallery")}
+        />
+      )}
+
+      {page === "gallery" && (
+        <Gallery
+          onFinish={() => setPage("letter")}
+        />
+      )}
+
+      {page === "letter" && (
+        <Letter
+          onFinish={() => setPage("ending")}
+        />
+      )}
+
+      {page === "ending" && (
+        <Ending />
+      )}
     </>
   );
 }

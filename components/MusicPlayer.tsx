@@ -1,43 +1,41 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 
-type MusicPlayerProps = {
-  play: boolean;
-};
-
-export default function MusicPlayer({ play }: MusicPlayerProps) {
+export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
 
-  useEffect(() => {
-    if (!audioRef.current || !play) return;
+  const toggleMusic = async () => {
+    if (!audioRef.current) return;
 
-    const audio = audioRef.current;
-
-    // Mulai dari bagian reff (sementara 53 detik)
-    audio.currentTime = 53;
-
-    audio.volume = 0;
-
-    audio.play().catch(() => {});
-
-    // Fade in volume
-    const fade = setInterval(() => {
-      if (audio.volume < 0.9) {
-        audio.volume += 0.05;
-      } else {
-        clearInterval(fade);
+    if (playing) {
+      audioRef.current.pause();
+    } else {
+      try {
+        await audioRef.current.play();
+      } catch (err) {
+        console.error(err);
       }
-    }, 200);
+    }
 
-    return () => clearInterval(fade);
-  }, [play]);
+    setPlaying(!playing);
+  };
 
   return (
-    <audio
-      ref={audioRef}
-      src="/music/song.mp3"
-      preload="auto"
-    />
+    <>
+      <audio
+        ref={audioRef}
+        src="/music/the-overtunes.mp3"
+        loop
+      />
+
+      <button
+        onClick={toggleMusic}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-pink-500 text-white shadow-xl hover:scale-110 transition-all"
+      >
+        {playing ? "❚❚" : "♫"}
+      </button>
+    </>
   );
 }
