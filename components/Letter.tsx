@@ -6,7 +6,7 @@ type LetterProps = {
   onFinish: () => void;
 };
 
-const fullText = `Halo Bila,
+const letterText = `Halo Sayang,
 
 Mungkin website ini sederhana.
 
@@ -48,62 +48,185 @@ export default function Letter({ onFinish }: LetterProps) {
     let index = 0;
 
     const interval = setInterval(() => {
-      setDisplayText(fullText.slice(0, index));
       index++;
 
-      if (index > fullText.length) {
+      setDisplayText(letterText.slice(0, index));
+
+      window.requestAnimationFrame(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      });
+
+      if (index >= letterText.length) {
         clearInterval(interval);
-        setTimeout(() => setShowButton(true), 600);
+
+        setTimeout(() => {
+          setShowButton(true);
+        }, 600);
       }
-    }, 30);
+    }, 28);
 
     return () => clearInterval(interval);
   }, [opened]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 via-white to-pink-100 flex items-center justify-center px-6 py-10">
-      {!opened ? (
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-2xl p-10 text-center">
-          <div className="text-7xl mb-5">💌</div>
-
-          <h1 className="text-4xl font-bold text-pink-600 mb-4">
-            Untuk Bila
-          </h1>
-
-          <p className="text-gray-600 leading-8 mb-8">
-            Ada sesuatu yang ingin aku sampaikan...
-          </p>
-
-          <button
-            onClick={() => setOpened(true)}
-            className="bg-pink-500 hover:bg-pink-600 transition-all text-white px-8 py-4 rounded-full shadow-xl hover:scale-105"
+    <div
+      className="
+      min-h-screen
+      bg-gradient-to-b
+      from-rose-100
+      via-pink-50
+      to-white
+      px-6
+      py-16
+      flex
+      justify-center
+      "
+    >
+      <div
+        className="
+        w-full
+        max-w-4xl
+        "
+      >
+        {!opened ? (
+          <div
+            className="
+            mx-auto
+            max-w-lg
+            rounded-[34px]
+            bg-white
+            shadow-2xl
+            p-10
+            text-center
+            transition
+            duration-500
+            "
           >
-            Buka Surat ❤️
-          </button>
-        </div>
-      ) : (
-        <div className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl p-10">
-          <h1 className="text-4xl font-bold text-center text-pink-600 mb-8">
-            Untuk Bila 🤍
-          </h1>
-
-          <div className="min-h-[420px] whitespace-pre-line leading-9 text-gray-700 text-lg">
-            {displayText}
-            <span className="animate-pulse">|</span>
-          </div>
-
-          {showButton && (
-            <div className="flex justify-center mt-10">
-              <button
-                onClick={onFinish}
-                className="bg-pink-500 hover:bg-pink-600 transition-all text-white px-10 py-4 rounded-full shadow-xl hover:scale-105"
-              >
-                Lanjut ❤️
-              </button>
+            <div className="text-7xl mb-6">
+              💌
             </div>
-          )}
-        </div>
-      )}
+
+            <h1
+              className="
+              text-4xl
+              font-bold
+              text-pink-600
+              mb-5
+              "
+            >
+              Untuk Bila
+            </h1>
+
+            <p
+              className="
+              text-gray-600
+              leading-8
+              text-lg
+              mb-10
+              "
+            >
+              Ada sesuatu
+              <br />
+              yang ingin aku sampaikan.
+            </p>
+
+            <button
+              onClick={() => setOpened(true)}
+              className="
+              px-10
+              py-4
+              rounded-full
+              bg-pink-500
+              hover:bg-pink-600
+              text-white
+              shadow-lg
+              transition
+              duration-300
+              hover:scale-105
+              "
+            >
+              Buka Surat ❤️
+            </button>
+          </div>
+        ) : (
+          <div
+            className="
+            bg-white
+            rounded-[34px]
+            shadow-2xl
+            p-8
+            md:p-12
+            transition
+            duration-500
+            "
+          >
+            <h1
+              className="
+              text-4xl
+              font-bold
+              text-center
+              text-pink-600
+              mb-10
+              "
+            >
+              Untuk Bila 🤍
+            </h1>
+
+            <div
+              className="
+              whitespace-pre-line
+              text-gray-700
+              text-lg
+              md:text-xl
+              leading-10
+              tracking-wide
+              min-h-[420px]
+              "
+            >
+              {displayText}
+
+              {!showButton && (
+                <span className="animate-pulse">
+                  |
+                </span>
+              )}
+            </div>
+            {showButton && (
+              <div
+                className="
+                flex
+                justify-center
+                mt-14
+                "
+              >
+                <button
+                  onClick={onFinish}
+                  className="
+                  px-10
+                  py-4
+                  rounded-full
+                  bg-pink-500
+                  hover:bg-pink-600
+                  text-white
+                  font-medium
+                  shadow-lg
+                  transition
+                  duration-300
+                  hover:scale-105
+                  active:scale-95
+                  "
+                >
+                  Lanjut ❤️
+                </button>
+              </div>
+            )}
+
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { ArrowLeft, Phone, Video, Info } from "lucide-react";
 
 export default function MessengerHeader() {
   return (
-    <div className="sticky top-0 bg-white border-b border-gray-200">
+    <div className="sticky top-0 bg-white border-b border-gray-200 z-50">
 
       <div className="flex items-center justify-between px-4 py-3">
 
@@ -14,11 +14,11 @@ export default function MessengerHeader() {
 
           <div>
 
-            <h1 className="font-semibold text-[17px]">
+            <h1 className="text-black font-bold text-[17px]">
               Ari Setiawan
             </h1>
 
-            <p className="text-xs text-gray-500">
+            <p className="text-sm text-gray-700">
               Aktif 6 jam yang lalu
             </p>
 

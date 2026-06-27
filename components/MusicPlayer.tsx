@@ -1,29 +1,80 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function MusicPlayer() {
+type MusicPlayerProps = {
+  play: boolean;
+};
+
+export default function MusicPlayer({
+  play,
+}: MusicPlayerProps) {
+
   const audioRef = useRef<HTMLAudioElement>(null);
+
   const [playing, setPlaying] = useState(false);
 
-  const toggleMusic = async () => {
+  // autoplay ketika play berubah menjadi true
+  useEffect(() => {
+
+    if (!play) return;
+
+    if (!audioRef.current) return;
+
+    const audio = audioRef.current;
+
+    audio.volume = 0;
+
+    audio.play().then(() => {
+
+      setPlaying(true);
+
+      let volume = 0;
+
+      const fade = setInterval(() => {
+
+        volume += 0.05;
+
+        if (volume >= 1) {
+
+          volume = 1;
+
+          clearInterval(fade);
+
+        }
+
+        audio.volume = volume;
+
+      }, 120);
+
+    }).catch(console.error);
+
+  }, [play]);
+
+  const toggleMusic = () => {
+
     if (!audioRef.current) return;
 
     if (playing) {
+
       audioRef.current.pause();
+
+      setPlaying(false);
+
     } else {
-      try {
-        await audioRef.current.play();
-      } catch (err) {
-        console.error(err);
-      }
+
+      audioRef.current.play();
+
+      setPlaying(true);
+
     }
 
-    setPlaying(!playing);
   };
 
   return (
+
     <>
+
       <audio
         ref={audioRef}
         src="/music/the-overtunes.mp3"
@@ -31,11 +82,48 @@ export default function MusicPlayer() {
       />
 
       <button
+
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-pink-500 text-white shadow-xl hover:scale-110 transition-all"
+
+        className="
+        fixed
+        bottom-6
+        right-6
+        z-50
+        flex
+        items-center
+        gap-2
+        bg-white/90
+        backdrop-blur-md
+        px-4
+        py-3
+        rounded-full
+        shadow-xl
+        hover:scale-105
+        transition-all
+        duration-300
+        "
+
       >
-        {playing ? "❚❚" : "♫"}
+
+        <span className="text-xl">
+
+          {playing ? "⏸" : "🎵"}
+
+        </span>
+
+        <span className="text-sm font-medium text-gray-700">
+
+          {playing
+            ? "Music On"
+            : "Music Off"}
+
+        </span>
+
       </button>
+
     </>
+
   );
+
 }

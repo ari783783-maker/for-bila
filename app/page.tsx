@@ -10,18 +10,34 @@ import Ending from "../components/Ending";
 import MusicPlayer from "../components/MusicPlayer";
 
 export default function Home() {
+
   const [page, setPage] = useState<
     "loading" | "messenger" | "gallery" | "letter" | "ending"
   >("loading");
 
+  const [playMusic, setPlayMusic] = useState(false);
+
   return (
     <>
-      <MusicPlayer />
+
+      <MusicPlayer play={playMusic} />
 
       {page === "loading" && (
+
         <LoadingScreen
-          onFinish={() => setPage("messenger")}
+          onFinish={() => {
+
+            setPlayMusic(true);
+
+            setTimeout(() => {
+
+              setPage("messenger");
+
+            }, 700);
+
+          }}
         />
+
       )}
 
       {page === "messenger" && (
@@ -38,13 +54,14 @@ export default function Home() {
 
       {page === "letter" && (
         <Letter
-          onFinish={() => setPage("ending")}
-        />
+        onFinish={() => setPage("ending")}
+      />
       )}
 
       {page === "ending" && (
         <Ending />
       )}
+
     </>
   );
 }
