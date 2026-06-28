@@ -10,12 +10,12 @@ type GalleryProps = {
 const photos = [
   "/images/1.jpeg",
   "/images/2.jpeg",
-  "/images/3.jpeg",
+  "/images/3-new.jpeg",
   "/images/4.jpeg",
-  "/images/5.jpeg",
-  "/images/6.jpeg",
+  "/images/5-new.jpeg",
+  "/images/6-new.jpeg",
   "/images/7.jpeg",
-  "/images/8.jpeg",
+  "/images/8-new.jpeg",
   "/images/9.jpeg",
   "/images/10.jpeg",
   "/images/11.jpeg",
@@ -23,6 +23,10 @@ const photos = [
   "/images/13.jpeg",
   "/images/14.jpeg",
   "/images/15.jpeg",
+  "/images/16-new.jpeg",
+  "/images/17.jpeg",
+  "/images/18.jpeg",
+  "/images/19.jpeg",
 ];
 
 export default function Gallery({
