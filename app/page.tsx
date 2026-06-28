@@ -8,12 +8,13 @@ import Gallery from "../components/Gallery";
 import Letter from "../components/Letter";
 import Ending from "../components/Ending";
 import MusicPlayer from "../components/MusicPlayer";
+import Intro from "../components/intro";
 
 export default function Home() {
 
   const [page, setPage] = useState<
-    "loading" | "messenger" | "gallery" | "letter" | "ending"
-  >("loading");
+  "loading" | "intro" | "messenger" | "gallery" | "letter" | "ending"
+>("loading");
 
   const [playMusic, setPlayMusic] = useState(false);
 
@@ -31,7 +32,7 @@ export default function Home() {
 
             setTimeout(() => {
 
-              setPage("messenger");
+              setPage("intro");
 
             }, 700);
 
@@ -39,6 +40,12 @@ export default function Home() {
         />
 
       )}
+
+{page === "intro" && (
+  <Intro
+    onFinish={() => setPage("messenger")}
+  />
+)}
 
       {page === "messenger" && (
         <Messenger
