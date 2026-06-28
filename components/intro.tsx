@@ -48,7 +48,6 @@ export default function Intro({ onFinish }: IntroProps) {
         </p>
 
         <div className="mt-8 text-4xl">
-          🤍
         </div>
 
       </div>

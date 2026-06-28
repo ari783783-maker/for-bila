@@ -51,7 +51,7 @@ export default function Gallery({
 
       <h1 className="text-5xl font-bold text-pink-600 drop-shadow-lg mb-10">
 
-        Galeri Kita 🤍
+        Cerita Kita 🤍
 
       </h1>
 

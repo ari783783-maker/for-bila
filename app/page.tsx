@@ -9,11 +9,12 @@ import Letter from "../components/Letter";
 import Ending from "../components/Ending";
 import MusicPlayer from "../components/MusicPlayer";
 import Intro from "../components/intro";
+import Story from "../components/Story";
 
 export default function Home() {
 
   const [page, setPage] = useState<
-  "loading" | "intro" | "messenger" | "gallery" | "letter" | "ending"
+  "loading" | "intro" | "messenger" | "story" | "gallery" | "letter" | "ending"
 >("loading");
 
   const [playMusic, setPlayMusic] = useState(false);
@@ -49,9 +50,15 @@ export default function Home() {
 
       {page === "messenger" && (
         <Messenger
-          onFinish={() => setPage("gallery")}
+          onFinish={() => setPage("story")}
         />
       )}
+
+{page === "story" && (
+  <Story
+    onFinish={() => setPage("gallery")}
+  />
+)}
 
       {page === "gallery" && (
         <Gallery
